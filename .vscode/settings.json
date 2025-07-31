@@ -1,0 +1,9 @@
+{
+  "black-formatter.args": ["--line-length", "150"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "pylint.args": ["--rcfile=${workspaceFolder}/.pylintrc"],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  }
+}
