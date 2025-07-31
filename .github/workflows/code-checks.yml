@@ -1,9 +1,21 @@
-name: Pylint
+name: Black Formatting
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
-  build:
+  black:
+    name: Run Black Code Formatter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Run Black
+        uses: psf/black@stable
+        with:
+          options: "--check --verbose --line-length 150"
+
+  pylint:
+    name: Run Pylint and check for Python version compatibility
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -21,4 +33,4 @@ jobs:
           pip install pylint
       - name: Analysing the code with pylint
         run: |
-          pylint $(git ls-files '*.py')
+          pylint $(git ls-files '*.py') --rcfile=.pylintrc
