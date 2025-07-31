@@ -5,7 +5,8 @@
     <a href="https://discord.gg/G8amSzV"><img alt="Discord" src="https://img.shields.io/discord/184248638845878274?style=for-the-badge&logo=discord"></a>
     <a href="https://github.com/voltstriker/Sons-of-Valour-Discord-Bot/blob/main/LICENSE.md"><img alt="GitHub License" src="https://img.shields.io/github/license/voltstriker/Sons-of-Valour-Discord-Bot?style=for-the-badge"></a>
     <a href="https://github.com/Voltstriker/Sons-of-Valour-Discord-Bot/releases"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/voltstriker/Sons-of-Valour-Discord-Bot?sort=semver&display_name=release&style=for-the-badge"></a>
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/voltstriker/Sons-of-Valour-Discord-Bot/main?style=for-the-badge">
+    <a href="https://github.com/Voltstriker/Sons-of-Valour-Discord-Bot/actions"><img alt="GitHub branch check runs" src="https://img.shields.io/github/check-runs/voltstriker/Sons-of-Valour-Discord-Bot/main?style=for-the-badge"></a>
+    <a href="https://github.com/Voltstriker/Sons-of-Valour-Discord-Bot/commits/main/"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/voltstriker/Sons-of-Valour-Discord-Bot/main?style=for-the-badge"></a>
     <a href="https://github.com/voltstriker/Sons-of-Valour-Discord-Bot/issues"><img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues/voltstriker/Sons-of-Valour-Discord-Bot?style=for-the-badge"></a>
     <img alt="Repository code style" src="https://img.shields.io/badge/code%20style-black-black?style=for-the-badge">
 </p>
