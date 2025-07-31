@@ -1,6 +1,6 @@
 # Sons of Valour Discord Bot (SoV Bot)
 
-<p align="left">
+<p align="center">
     <a href="https://www.sonsofvalour.net"><img alt="Static Badge" src="https://img.shields.io/badge/website-sonsofvalour.net-orange?style=for-the-badge"></a>
     <a href="https://discord.gg/G8amSzV"><img alt="Discord" src="https://img.shields.io/discord/184248638845878274?style=for-the-badge&logo=discord"></a>
     <a href="https://github.com/voltstriker/Sons-of-Valour-Discord-Bot/blob/main/LICENSE.md"><img alt="GitHub License" src="https://img.shields.io/github/license/voltstriker/Sons-of-Valour-Discord-Bot?style=for-the-badge"></a>
