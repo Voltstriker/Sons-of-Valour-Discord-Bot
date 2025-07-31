@@ -1,6 +1,6 @@
 # Sons of Valour Discord Bot (SoV Bot)
 
-<p align="center">
+<p align="left">
     <a href="https://www.sonsofvalour.net"><img alt="Static Badge" src="https://img.shields.io/badge/website-sonsofvalour.net-orange?style=for-the-badge"></a>
     <a href="https://discord.gg/G8amSzV"><img alt="Discord" src="https://img.shields.io/discord/184248638845878274?style=for-the-badge&logo=discord"></a>
     <a href="https://github.com/voltstriker/Sons-of-Valour-Discord-Bot/blob/main/LICENSE.md"><img alt="GitHub License" src="https://img.shields.io/github/license/voltstriker/Sons-of-Valour-Discord-Bot?style=for-the-badge"></a>
@@ -20,7 +20,7 @@ Sons of Valour is a community gaming group that is committed to providing a fun 
 1. Download the latest release or clone this repository
 2. Register a Discord bot on the [developer portal](https://discord.com/developers/applications)
 3. Update the .env file with the necessary credentials
-4. Install the necessary requirements using the command: `python -m pip install -r requirements.txt`
+4. Install the application requirements using the command: `python -m pip install -r requirements.txt`
 5. Launch the application using the command: `python bot.py`
 
 > **Note**: You may need to replace `python` with `py`, `python3`, `python3.11`, etc. depending on what Python versions you have installed on the machine.
