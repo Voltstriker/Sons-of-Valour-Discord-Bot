@@ -14,13 +14,17 @@
 
 
 """
-This file is part of the Sons of Valour Discord Bot project, which is designed to enhance the community experience for Sons of Valour members on Discord.
+This file is part of the Sons of Valour Discord Bot project, designed to enhance the community experience for Sons of Valour members on Discord.
 
-The bot provides various features such as moderation tools, event management, and community engagement functionalities.
+The bot provides various features such as:
+    - moderation tools
+    - event management
+    - community engagement functionalities
 
-This project is maintained by the Sons of Valour community and is open for contributions. For more information, please refer to the project's documentation and contribution guidelines.
+This project is maintained by the Sons of Valour community and is open for contributions. For more information, please refer to the project's
+documentation and contribution guidelines.
 
-For more information, please visit the [Sons of Valour website](https://www.sonsofvalour.net) or join our [Discord server](https://discord.gg/G8amSzV).
+For more information, visit the [Sons of Valour website](https://www.sonsofvalour.net) or join our [Discord server](https://discord.gg/G8amSzV).
 
 This file is licensed under the Apache License, Version 2.0. See the LICENSE file
 """
