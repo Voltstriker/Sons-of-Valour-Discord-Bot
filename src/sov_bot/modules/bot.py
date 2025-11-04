@@ -1,53 +1,13 @@
-# Copyright 2025 Sons of Valour
-
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-
-#     http://www.apache.org/licenses/LICENSE-2.0
-
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-"""
-This file is part of the Sons of Valour Discord Bot project, designed to enhance the community experience for Sons of Valour members on Discord.
-
-The bot provides various features such as:
-    - moderation tools
-    - event management
-    - community engagement functionalities
-
-This project is maintained by the Sons of Valour community and is open for contributions. For more information, please refer to the project's
-documentation and contribution guidelines.
-
-For more information, visit the [Sons of Valour website](https://www.sonsofvalour.net) or join our [Discord server](https://discord.gg/G8amSzV).
-
-This file is licensed under the Apache License, Version 2.0. See the LICENSE file
-"""
-
 import os
 import random
 import platform
 
 import discord
 from discord.ext import commands, tasks
-from dotenv import load_dotenv
-from sov_bot.modules import logs
-
-# Load environment variables from .env file
-load_dotenv()
-
-intents = discord.Intents.default()
-
-# Initialize logging
-logger = logs.LoggingFormatter.start_logging(log_name="sov_bot", log_level=os.getenv("LOG_LEVEL", "INFO"))
 
 
 class DiscordBot(commands.Bot):
-    def __init__(self) -> None:
+    def __init__(self, logger, intents) -> None:
         super().__init__(
             command_prefix=commands.when_mentioned_or(os.getenv("PREFIX", "!")),
             intents=intents,
@@ -97,7 +57,3 @@ class DiscordBot(commands.Bot):
         if message.author == self.user or message.author.bot:
             return
         await self.process_commands(message)
-
-
-bot = DiscordBot()
-bot.run(os.getenv("TOKEN"))
