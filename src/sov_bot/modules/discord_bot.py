@@ -28,6 +28,7 @@ DiscordBot
 import os
 import platform
 import logging
+from pathlib import Path
 
 import discord
 from discord.ext import commands
@@ -49,17 +50,31 @@ class DiscordBot(commands.Bot):
         The command prefix for the bot, retrieved from environment variables.
     user_name : str
         The name of the bot, with a default value of "Sons of Valour".
+    app_dir : pathlib.Path
+        The application directory path.
 
     Methods
     -------
+    __init__(logger, intents)
+        Initializes the DiscordBot instance.
     status_task()
         Periodically updates the bot's status.
     before_status_task()
         Ensures the bot is ready before starting the status task.
     setup_hook()
         Performs setup actions when the bot starts for the first time.
+    load_cogs()
+        Loads all cogs/extensions from the cogs directory.
     on_message(message)
         Handles incoming messages sent in channels the bot has access to.
+    on_ready()
+        Event handler called when the bot is ready.
+
+    Notes
+    -----
+    - The bot disables the default help command.
+    - The invite URL is logged on startup.
+    - Cogs are loaded dynamically from the cogs directory.
     """
 
     def __init__(self, logger: logging.Logger, intents: discord.Intents) -> None:
@@ -82,36 +97,59 @@ class DiscordBot(commands.Bot):
         self.logger = logger
         self.bot_prefix = os.getenv("PREFIX", "!")
         self.user_name = os.getenv("BOT_NAME", "Sons of Valour")
+        self.app_dir = Path(os.path.dirname(os.path.abspath(__file__))).parent
 
     async def setup_hook(self) -> None:
         """
-        Perform setup actions when the bot starts for the first time.
+        Performs setup actions when the bot starts for the first time.
 
         Logs bot authentication details, API versions, and invite URL.
+        Loads all cogs/extensions.
         """
-        self.logger.info("Successfully authenticated as bot '%s'", self.user.name if self.user else "Unknown")
-        self.logger.info("discord.py API version: %s", discord.__version__)
         self.logger.info("Python version: %s", platform.python_version())
         self.logger.info("Running on: %s %s (%s)", platform.system(), platform.release(), os.name)
+        self.logger.info("Application directory: '%s'", self.app_dir)
+        self.logger.info("discord.py API version: %s", discord.__version__)
+        self.logger.info("Connecting to Discord API as bot '%s'", self.user.name if self.user else "Unknown")
 
-        self.logger.info(
-            "Invite URL: https://discord.com/oauth2/authorize?client_id=%s&permissions=3115320667786487&scope=bot%%20applications.commands",  # pylint: disable=line-too-long
-            self.client_id,
-        )
+        await self.load_cogs()
 
-        # Sync slash commands
-        try:
-            synced = await self.tree.sync()
-            self.logger.info("Synced %d command(s)", len(synced))
-        except Exception as e:
-            self.logger.error("Failed to sync commands: %s", e)
+    async def load_cogs(self) -> None:
+        """
+        Loads all cogs/extensions from the cogs directory.
+
+        Iterates through all Python files in the cogs directory, attempts to load each
+        as a Discord extension, and logs the result. Successfully loaded extensions
+        are tracked and reported.
+
+        Logs
+        ----
+        - Info: List of successfully loaded extensions.
+        - Error: Any exceptions encountered while loading an extension.
+        """
+        # Load each cog/extension from the cogs directory
+        cogs_dir = os.path.join(self.app_dir, "cogs")
+        cogs_loaded = []
+        for file in os.listdir(cogs_dir):
+            if file.endswith(".py"):
+                extension = file[:-3]  # Actual file name without .py
+
+                # Load the extension and log the result
+                try:
+                    cog_path = f"{Path(cogs_dir).parent.name}.cogs.{extension}"
+                    await self.load_extension(cog_path)
+                    cogs_loaded.append(extension)
+                except Exception as e:
+                    exception = f"{type(e).__name__}: {e}"
+                    self.logger.error(f"Failed to load extension {extension}\n{exception}")
+
+        self.logger.info(f"Loaded extensions: {', '.join(cogs_loaded)}")
 
     async def on_message(self, message: discord.Message) -> None:  # pylint: disable=arguments-differ
         """
-        Handle incoming messages.
+        Handles incoming messages sent in channels the bot has access to.
 
-        This method is executed every time a message is sent in a channel
-        the bot has access to.
+        Processes commands for valid messages - ignores messages from the bot itself or other bots.
 
         Parameters
         ----------

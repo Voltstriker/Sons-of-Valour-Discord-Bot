@@ -44,6 +44,7 @@ logger = logs.LoggingFormatter.start_logging(log_name="sov_bot", log_level=os.ge
 
 # Create bot instance
 intents = discord.Intents.default()
+intents.message_content = True
 bot = discord_bot.DiscordBot(logger=logger, intents=intents)
 
 # Launch the Discord bot
