@@ -29,7 +29,7 @@ class LoggingFormatter(logging.Formatter):
     based on their severity level.
     """
 
-    def __init__(self, colours: dict = None) -> None:
+    def __init__(self, colours: dict | None = None) -> None:
         super().__init__()
 
         # Define logging colours
@@ -89,7 +89,7 @@ class LoggingFormatter(logging.Formatter):
         return formatter.format(record)
 
     @staticmethod
-    def start_logging(log_name: str = "discord_bot", log_level: str = "INFO", log_path: str = None) -> None:
+    def start_logging(log_name: str = "discord_bot", log_level: str = "INFO", log_path: str | None = None) -> logging.Logger:
         """
         Sets up logging with a console handler and a file handler.
 

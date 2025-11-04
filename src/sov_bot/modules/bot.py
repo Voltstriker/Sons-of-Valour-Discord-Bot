@@ -110,7 +110,7 @@ class DiscordBot(commands.Bot):
 
         Logs bot authentication details, API versions, and invite URL.
         """
-        self.logger.info("Successfully authenticated as bot '%s'", self.user.name)
+        self.logger.info("Successfully authenticated as bot '%s'", self.user.name if self.user else "Unknown")
         self.logger.info("discord.py API version: %s", discord.__version__)
         self.logger.info("Python version: %s", platform.python_version())
         self.logger.info("Running on: %s %s (%s)", platform.system(), platform.release(), os.name)

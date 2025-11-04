@@ -44,4 +44,9 @@ logger = logs.LoggingFormatter.start_logging(log_name="sov_bot", log_level=os.ge
 # Create bot instance
 intents = discord.Intents.default()
 bot = bot.DiscordBot(logger=logger, intents=intents)
-bot.run(os.getenv("TOKEN"))
+
+# Launch the Discord bot
+token = os.getenv("TOKEN")
+if token is None:
+    raise ValueError("Missing Discord secret token in environment variables.")
+bot.run(token)
