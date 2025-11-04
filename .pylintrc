@@ -12,4 +12,4 @@ default-docstring-type = numpy
 max-line-length = 150
 
 [MESSAGES CONTROL]
-disable = C0199, C0411
+disable = C0199, C0411, W0718
