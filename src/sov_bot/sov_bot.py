@@ -39,7 +39,7 @@ from sov_bot.modules import bot, logs
 load_dotenv()
 
 # Initialize logging
-logger = logs.LoggingFormatter.start_logging(log_name="sov_bot", log_level=os.getenv("LOG_LEVEL", "INFO"))
+logger = logs.LoggingFormatter.start_logging(log_name="sov_bot", log_level=os.getenv("LOG_LEVEL", "INFO"), log_path=os.getenv("LOG_PATH"))
 
 # Create bot instance
 intents = discord.Intents.default()
