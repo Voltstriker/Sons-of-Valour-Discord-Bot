@@ -1,3 +1,30 @@
+# Copyright 2025 Sons of Valour
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+"""
+This module contains the implementation of the DiscordBot class.
+
+The DiscordBot class extends the functionality of the discord.ext.commands.Bot
+class to provide additional features such as periodic status updates, logging,
+and message handling.
+
+Classes
+-------
+DiscordBot
+    A custom bot implementation for managing Discord interactions.
+"""
+
 import os
 import random
 import platform
@@ -8,6 +35,16 @@ from discord.ext import commands, tasks
 
 class DiscordBot(commands.Bot):
     def __init__(self, logger, intents) -> None:
+        """
+        Initialize the DiscordBot instance.
+
+        Parameters
+        ----------
+        logger : logging.Logger
+            The logger instance for logging bot events.
+        intents : discord.Intents
+            The intents to use for the bot.
+        """
         super().__init__(
             command_prefix=commands.when_mentioned_or(os.getenv("PREFIX", "!")),
             intents=intents,
@@ -22,7 +59,10 @@ class DiscordBot(commands.Bot):
     @tasks.loop(minutes=1.0)
     async def status_task(self) -> None:
         """
-        Setup the game status task of the bot.
+        Periodically update the bot's status.
+
+        This task changes the bot's presence to a random status message
+        every minute.
         """
         statuses = ["with you!", "with Krypton!", "with humans!"]
         await self.change_presence(activity=discord.Game(random.choice(statuses)))
@@ -30,13 +70,15 @@ class DiscordBot(commands.Bot):
     @status_task.before_loop
     async def before_status_task(self) -> None:
         """
-        Before starting the status changing task, we make sure the bot is ready
+        Wait until the bot is ready before starting the status task.
         """
         await self.wait_until_ready()
 
     async def setup_hook(self) -> None:
         """
-        This will just be executed when the bot starts the first time.
+        Perform setup actions when the bot starts for the first time.
+
+        Logs bot authentication details, API versions, and invite URL.
         """
         self.logger.info("Successfully authenticated as bot '%s'", self.user.name)
         self.logger.info("discord.py API version: %s", discord.__version__)
@@ -50,9 +92,15 @@ class DiscordBot(commands.Bot):
 
     async def on_message(self, message: discord.Message) -> None:
         """
-        The code in this event is executed every time someone sends a message, with or without the prefix
+        Handle incoming messages.
 
-        :param message: The message that was sent.
+        This method is executed every time a message is sent in a channel
+        the bot has access to.
+
+        Parameters
+        ----------
+        message : discord.Message
+            The message that was sent.
         """
         if message.author == self.user or message.author.bot:
             return
