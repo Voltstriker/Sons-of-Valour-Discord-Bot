@@ -8,7 +8,7 @@
       "name": "Launch SoV Bot",
       "type": "debugpy",
       "request": "launch",
-      "program": "${workspaceFolder}/bot.py",
+      "program": "${workspaceFolder}/src/sov_bot/bot.py",
       "console": "integratedTerminal"
     }
   ]
