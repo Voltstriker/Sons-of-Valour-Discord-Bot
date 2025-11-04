@@ -15,7 +15,7 @@ jobs:
           options: "--check --verbose --line-length 150"
 
   pylint:
-    name: Run Pylint and check for Python version compatibility
+    name: Run Pylint Linter
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
