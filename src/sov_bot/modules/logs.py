@@ -29,11 +29,11 @@ class LoggingFormatter(logging.Formatter):
     based on their severity level.
     """
 
-    def __init__(self, colours: dict | None = None) -> None:
+    def __init__(self, colours: dict[str, str] | None = None) -> None:
         super().__init__()
 
         # Define logging colours
-        self.colours = colours or {
+        self.colours: dict[str, str] = colours or {
             "black": "\x1b[30m",
             "red": "\x1b[31m",
             "green": "\x1b[32m",
@@ -42,14 +42,14 @@ class LoggingFormatter(logging.Formatter):
             "grey": "\x1b[38;5;240m",
             "purple": "\x1b[35m",
         }
-        self.formats = {
+        self.formats: dict[str, str] = {
             "reset": "\x1b[0m",
             "bold": "\x1b[1m",
             "italic": "\x1b[3m",
             "underline": "\x1b[4m",
             "strikethrough": "\x1b[9m",
         }
-        self.log_formats = {
+        self.log_formats: dict[int, str] = {
             logging.DEBUG: self.colours["grey"],
             logging.INFO: self.colours["blue"],
             logging.WARNING: self.colours["yellow"],
@@ -57,7 +57,7 @@ class LoggingFormatter(logging.Formatter):
             logging.CRITICAL: self.colours["red"],
         }
 
-    def format(self, record):
+    def format(self, record: logging.LogRecord) -> str:
         """
         Format a log record with ANSI color codes.
 

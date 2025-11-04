@@ -28,6 +28,7 @@ DiscordBot
 import os
 import random
 import platform
+import logging
 
 import discord
 from discord.ext import commands, tasks
@@ -64,7 +65,7 @@ class DiscordBot(commands.Bot):
         Handles incoming messages sent in channels the bot has access to.
     """
 
-    def __init__(self, logger, intents) -> None:
+    def __init__(self, logger: logging.Logger, intents: discord.Intents) -> None:
         """
         Initialize the DiscordBot instance.
 
@@ -120,7 +121,7 @@ class DiscordBot(commands.Bot):
             self.client_id,
         )
 
-    async def on_message(self, message) -> None:  # pylint: disable=arguments-differ
+    async def on_message(self, message: discord.Message) -> None:  # pylint: disable=arguments-differ
         """
         Handle incoming messages.
 
@@ -132,9 +133,6 @@ class DiscordBot(commands.Bot):
         message : discord.Message
             The message object that was sent.
         """
-        if message is None:
-            return
-
         # Ignore messages from the bot itself or other bots
         if message.author == self.user or getattr(message.author, "bot", False):
             return
