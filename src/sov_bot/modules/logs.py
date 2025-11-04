@@ -118,6 +118,8 @@ class LoggingFormatter(logging.Formatter):
         # File handler
         if log_path is None:
             log_path = os.getcwd()
+        if not os.path.exists(log_path):
+            os.makedirs(log_path, exist_ok=True)
         log_file = os.path.join(log_path, f"{log_name}.log")
         file_handler = logging.FileHandler(filename=log_file, encoding="utf-8", mode="w")
         file_handler_formatter = logging.Formatter("[{asctime}] [{levelname:^8}] {name}: {message}", "%Y-%m-%d %H:%M:%S", style="{")
