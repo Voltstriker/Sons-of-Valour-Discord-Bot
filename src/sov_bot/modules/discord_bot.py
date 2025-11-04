@@ -47,8 +47,6 @@ class DiscordBot(commands.Bot):
         The logger instance for logging bot events.
     bot_prefix : str
         The command prefix for the bot, retrieved from environment variables.
-    client_id : str
-        The client ID of the bot, retrieved from environment variables.
     user_name : str
         The name of the bot, with a default value of "Sons of Valour".
 
@@ -82,8 +80,7 @@ class DiscordBot(commands.Bot):
         )
 
         self.logger = logger
-        self.bot_prefix = os.getenv("PREFIX")
-        self.client_id = os.getenv("CLIENT_ID")
+        self.bot_prefix = os.getenv("PREFIX", "!")
         self.user_name = os.getenv("BOT_NAME", "Sons of Valour")
 
     async def setup_hook(self) -> None:
@@ -126,3 +123,19 @@ class DiscordBot(commands.Bot):
             return
 
         await self.process_commands(message)
+
+    async def on_ready(self) -> None:
+        """
+        Event handler called when the bot is ready.
+
+        Logs a message indicating that the bot is online and prints the invite URL.
+        """
+        self.logger.info("Bot is online and ready to receive commands.")
+
+        # Create an invite URL and log to console
+        app_info = await self.application_info()
+        client_id = str(app_info.id)
+        self.logger.info(
+            "Invite URL: https://discord.com/oauth2/authorize?client_id=%s&permissions=3115320667786487&scope=bot%%20applications.commands",  # pylint: disable=line-too-long
+            client_id,
+        )
