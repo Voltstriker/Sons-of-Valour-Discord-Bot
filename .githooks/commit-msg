@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
 echo "Running commit message checks..."
 
-
 # Get the commit message
 commit="$(cat .git/COMMIT_EDITMSG)"
 # Define the conventional commit regex
