@@ -56,7 +56,8 @@ class DiscordBot(commands.Bot):
 
         self.logger = logger
         self.bot_prefix = os.getenv("PREFIX")
-        self.invite_link = os.getenv("INVITE_LINK")
+        self.client_id = os.getenv("CLIENT_ID")
+        self.user_name = os.getenv("BOT_NAME", "Sons of Valour")
 
     @tasks.loop(minutes=1.0)
     async def status_task(self) -> None:
@@ -77,11 +78,15 @@ class DiscordBot(commands.Bot):
         """
         This will just be executed when the bot starts the first time.
         """
-        self.logger.info(f"Logged in as {self.user.name}")
-        self.logger.info(f"discord.py API version: {discord.__version__}")
-        self.logger.info(f"Python version: {platform.python_version()}")
-        self.logger.info(f"Running on: {platform.system()} {platform.release()} ({os.name})")
-        self.logger.info("-------------------")
+        self.logger.info("Successfully authenticated as bot '%s'", self.user.name)
+        self.logger.info("discord.py API version: %s", discord.__version__)
+        self.logger.info("Python version: %s", platform.python_version())
+        self.logger.info("Running on: %s %s (%s)", platform.system(), platform.release(), os.name)
+
+        self.logger.info(
+            "Invite URL: https://discord.com/oauth2/authorize?client_id=%s&permissions=3115320667786487&scope=bot%%20applications.commands",  # pylint: disable=line-too-long
+            self.client_id,
+        )
 
     async def on_message(self, message: discord.Message) -> None:
         """
