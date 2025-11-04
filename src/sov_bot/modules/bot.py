@@ -34,6 +34,36 @@ from discord.ext import commands, tasks
 
 
 class DiscordBot(commands.Bot):
+    """
+    A custom implementation of a Discord bot.
+
+    This class extends the `discord.ext.commands.Bot` class to provide
+    additional functionality, including periodic status updates, logging,
+    and handling incoming messages.
+
+    Attributes
+    ----------
+    logger : logging.Logger
+        The logger instance for logging bot events.
+    bot_prefix : str
+        The command prefix for the bot, retrieved from environment variables.
+    client_id : str
+        The client ID of the bot, retrieved from environment variables.
+    user_name : str
+        The name of the bot, with a default value of "Sons of Valour".
+
+    Methods
+    -------
+    status_task()
+        Periodically updates the bot's status.
+    before_status_task()
+        Ensures the bot is ready before starting the status task.
+    setup_hook()
+        Performs setup actions when the bot starts for the first time.
+    on_message(message)
+        Handles incoming messages sent in channels the bot has access to.
+    """
+
     def __init__(self, logger, intents) -> None:
         """
         Initialize the DiscordBot instance.
