@@ -120,7 +120,7 @@ class DiscordBot(commands.Bot):
             self.client_id,
         )
 
-    async def on_message(self, message: discord.Message) -> None:
+    async def on_message(self, message) -> None:  # pylint: disable=arguments-differ
         """
         Handle incoming messages.
 
@@ -130,8 +130,13 @@ class DiscordBot(commands.Bot):
         Parameters
         ----------
         message : discord.Message
-            The message that was sent.
+            The message object that was sent.
         """
-        if message.author == self.user or message.author.bot:
+        if message is None:
             return
+
+        # Ignore messages from the bot itself or other bots
+        if message.author == self.user or getattr(message.author, "bot", False):
+            return
+
         await self.process_commands(message)
