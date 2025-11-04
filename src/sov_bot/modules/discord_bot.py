@@ -167,8 +167,13 @@ class DiscordBot(commands.Bot):
         Event handler called when the bot is ready.
 
         Logs a message indicating that the bot is online and prints the invite URL.
+        Sets the bot's status and activity.
         """
         self.logger.info("Bot is online and ready to receive commands.")
+
+        # Set bot status and activity
+        activity = discord.Game(name="https://sonsofvalour.net")
+        await self.change_presence(status=discord.Status.online, activity=activity)
 
         # Create an invite URL and log to console
         app_info = await self.application_info()
