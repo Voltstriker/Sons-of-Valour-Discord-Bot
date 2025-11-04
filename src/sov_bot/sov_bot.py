@@ -43,8 +43,7 @@ load_dotenv()
 logger = logs.LoggingFormatter.start_logging(log_name="sov_bot", log_level=os.getenv("LOG_LEVEL", "INFO"), log_path=os.getenv("LOG_PATH"))
 
 # Create bot instance
-intents = discord.Intents.default()
-intents.message_content = True
+intents = discord.Intents.all()
 bot = discord_bot.DiscordBot(logger=logger, intents=intents)
 
 # Launch the Discord bot
