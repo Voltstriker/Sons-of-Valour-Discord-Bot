@@ -26,12 +26,11 @@ DiscordBot
 """
 
 import os
-import random
 import platform
 import logging
 
 import discord
-from discord.ext import commands, tasks
+from discord.ext import commands
 
 
 class DiscordBot(commands.Bot):
@@ -87,24 +86,6 @@ class DiscordBot(commands.Bot):
         self.client_id = os.getenv("CLIENT_ID")
         self.user_name = os.getenv("BOT_NAME", "Sons of Valour")
 
-    @tasks.loop(minutes=1.0)
-    async def status_task(self) -> None:
-        """
-        Periodically update the bot's status.
-
-        This task changes the bot's presence to a random status message
-        every minute.
-        """
-        statuses = ["with you!", "with Krypton!", "with humans!"]
-        await self.change_presence(activity=discord.Game(random.choice(statuses)))
-
-    @status_task.before_loop
-    async def before_status_task(self) -> None:
-        """
-        Wait until the bot is ready before starting the status task.
-        """
-        await self.wait_until_ready()
-
     async def setup_hook(self) -> None:
         """
         Perform setup actions when the bot starts for the first time.
@@ -121,6 +102,13 @@ class DiscordBot(commands.Bot):
             self.client_id,
         )
 
+        # Sync slash commands
+        try:
+            synced = await self.tree.sync()
+            self.logger.info("Synced %d command(s)", len(synced))
+        except Exception as e:
+            self.logger.error("Failed to sync commands: %s", e)
+
     async def on_message(self, message: discord.Message) -> None:  # pylint: disable=arguments-differ
         """
         Handle incoming messages.
@@ -134,7 +122,7 @@ class DiscordBot(commands.Bot):
             The message object that was sent.
         """
         # Ignore messages from the bot itself or other bots
-        if message.author == self.user or getattr(message.author, "bot", False):
+        if message.author == self.user or message.author.bot:
             return
 
         await self.process_commands(message)

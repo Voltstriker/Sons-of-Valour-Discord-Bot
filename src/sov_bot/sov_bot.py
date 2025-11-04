@@ -33,7 +33,8 @@ import os
 import discord
 from dotenv import load_dotenv
 
-from sov_bot.modules import bot, logs
+from sov_bot.modules import discord_bot
+from sov_bot.utils import logs
 
 # Load environment variables from .env file
 load_dotenv()
@@ -43,7 +44,7 @@ logger = logs.LoggingFormatter.start_logging(log_name="sov_bot", log_level=os.ge
 
 # Create bot instance
 intents = discord.Intents.default()
-bot = bot.DiscordBot(logger=logger, intents=intents)
+bot = discord_bot.DiscordBot(logger=logger, intents=intents)
 
 # Launch the Discord bot
 token = os.getenv("TOKEN")
